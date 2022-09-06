@@ -10,6 +10,10 @@ public class ProjectileGun : MonoBehaviour
     //Spawnpoint of Bullet
     private Transform Bullet_Spawn = null;
 
+    //Tank_Base
+    public GameObject Tank = null;
+
+
     //bullet force
     public float shootForce;
 
@@ -34,6 +38,8 @@ public class ProjectileGun : MonoBehaviour
     {
         readyToShoot = true;
         Bullet_Spawn = transform.Find("Bullet_Spawn");
+        Tank = GameObject.Find("Tank");
+        
     }
 
         // Update is called once per frame
@@ -58,12 +64,13 @@ public class ProjectileGun : MonoBehaviour
     {
         GameObject bullet = Instantiate(Bullet,
         Bullet_Spawn.position, Quaternion.identity);
-        bullet.transform.Rotate(0,0,90);
+        bullet.transform.Rotate(0,(Tank.transform.eulerAngles.y + 90) ,90);
 
         Rigidbody rb = bullet.AddComponent<Rigidbody>();
 
         rb.useGravity = false;
         rb.velocity = Power * Bullet_Spawn.forward;
+        
 
         StartCoroutine(RemoveBullet_Rigidbody(rb, 3.0f));
     }
