@@ -5,7 +5,7 @@ using UnityEngine;
 public class ProjectileGun : MonoBehaviour
 {
     //bullet
-    public GameObject Bullet = null;
+    public GameObject bullet;
 
     //Spawnpoint of Bullet
     private Transform Bullet_Spawn = null;
@@ -62,23 +62,20 @@ public class ProjectileGun : MonoBehaviour
 
     private void Shoot()
     {
-        GameObject bullet = Instantiate(Bullet,
+        GameObject currentBullet = Instantiate(bullet,
         Bullet_Spawn.position, Quaternion.identity);
-        bullet.transform.Rotate(0,(Tank.transform.eulerAngles.y + 90) ,90);
+        currentBullet.transform.Rotate(0,(Tank.transform.eulerAngles.y + 90) ,90);
 
-        Rigidbody rb = bullet.AddComponent<Rigidbody>();
+        
+        Rigidbody rb = currentBullet.AddComponent<Rigidbody>();
 
         rb.useGravity = false;
+        rb.interpolation = RigidbodyInterpolation.Interpolate;
+        rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
         rb.velocity = Power * Bullet_Spawn.forward;
         
 
-        StartCoroutine(RemoveBullet_Rigidbody(rb, 3.0f));
-    }
-
-    IEnumerator RemoveBullet_Rigidbody(Rigidbody rb, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        Destroy(rb);
+        
     }
 
  }
