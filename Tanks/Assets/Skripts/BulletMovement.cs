@@ -37,10 +37,14 @@ public class BulletMovement : MonoBehaviour
 	private void Explode()
 	{
 		//Instantiate explosion
-		if (explosion != null) Instantiate(explosion, transform.position, Quaternion.identity);
+		if (explosion != null)
+		{
+			Instantiate(explosion, transform.position, Quaternion.identity);
+		}
+		
 
 		//Add a little delay, just to make sure everything works fine
-		Invoke("Delay",0.04f);
+		Invoke("Delay",0.02f);
 	}
 
 	private void Delay()
